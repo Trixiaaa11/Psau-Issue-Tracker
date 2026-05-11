@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSAU Issue Tracker</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#f0f4f8,#e2e8f0);
+    color:#1e293b;
+}
+
+.hero-header{
+    background:linear-gradient(135deg,#1e3a8a,#1e40af);
+    padding:2rem;
+    color:white;
+}
+
+.header-content{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+}
+
+.logo{
+    font-size:2rem;
+    font-weight:800;
+}
+
+.main-nav{
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav-container{
+    max-width:1200px;
+    margin:auto;
+    padding:0 1rem;
+}
+
+.nav-links{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:.6rem;
+    padding:1rem 0;
+}
+
+.nav-links li{
+    list-style:none;
+}
+
+.nav-links a{
+    display:inline-block;
+    padding:.8rem 1.2rem;
+    border-radius:50px;
+    text-decoration:none;
+    color:#1e3a8a;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    background:#1e3a8a;
+    color:white;
+}
+
+.main-container{
+    max-width:1200px;
+    margin:2rem auto;
+    padding:0 1rem;
+}
+
+.content-card{
+    background:white;
+    padding:2rem;
+    border-radius:20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.08);
+    margin-bottom:2rem;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.hero-home{
+    text-align:center;
+    padding:2rem 0;
+}
+
+.hero-title{
+    font-size:3rem;
+    margin-bottom:1rem;
+    color:#1e3a8a;
+}
+
+.hero-subtitle{
+    color:#64748b;
+    max-width:700px;
+    margin:auto;
+}
+
+.form-group{
+    margin-bottom:1.5rem;
+}
+
+label{
+    display:block;
+    margin-bottom:.5rem;
+    font-weight:600;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:1rem;
+    border:2px solid #e2e8f0;
+    border-radius:12px;
+    background:#f8fafc;
+}
+
+textarea{
+    resize:none;
+}
+
+.btn-primary{
+    width:100%;
+    padding:1rem;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#1e3a8a,#1e40af);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:2rem;
+}
+
+.data-table th{
+    background:#1e3a8a;
+    color:white;
+    padding:1rem;
+}
+
+.data-table td{
+    padding:1rem;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.status-badge{
+    padding:.4rem 1rem;
+    border-radius:50px;
+    color:white;
+    font-size:.8rem;
+    font-weight:600;
+    background:#3b82f6;
+}
+
+.done{
+    background:#10b981;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.5rem;
+}
+
+.stat-card{
+    background:#dbeafe;
+    padding:2rem;
+    border-radius:16px;
+    text-align:center;
+}
+
+.stat-number{
+    font-size:2.5rem;
+    font-weight:800;
+    color:#1e3a8a;
+}
+
+.announcement-box{
+    background:#dbeafe;
+    padding:1.5rem;
+    border-radius:16px;
+    margin-top:1rem;
+}
+
+.announcement-item{
+    background:white;
+    padding:1rem;
+    border-radius:12px;
+    margin-top:1rem;
+    border-left:5px solid #1e3a8a;
+}
+
+@media(max-width:768px){
+
+.hero-title{
+    font-size:2rem;
+}
+
+.content-card{
+    padding:1.5rem;
+}
+
+.nav-links{
+    justify-content:flex-start;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="hero-header">
+
+<div class="header-content">
+
+<div class="logo">
+PSAU Issue Tracker
+</div>
+
+</div>
+
+</header>
+
+<nav class="main-nav">
+
+<div class="nav-container">
+
+<ul class="nav-links">
+
+<li><a href="#" onclick="showSection('home',event)" class="active">Home</a></li>
+
+<li><a href="#" onclick="showSection('report',event)">Report Issue</a></li>
+
+<li><a href="#" onclick="showSection('my-reports',event)">My Reports</a></li>
+
+<li><a href="#" onclick="showSection('dashboard',event)">Dashboard</a></li>
+
+<li><a href="#" onclick="showSection('admin',event)">Admin Panel</a></li>
+
+<li><a href="#" onclick="showSection('announcement',event)">Announcements</a></li>
+
+<li><a href="#" onclick="showSection('contact',event)">Contact</a></li>
+
+</ul>
+
+</div>
+
+</nav>
+
+<main class="main-container">
+
+<div id="home" class="section active">
+
+<div class="content-card">
+
+<div class="hero-home">
+
+<h1 class="hero-title">
+Report Campus Issues Instantly
+</h1>
+
+<p class="hero-subtitle">
+Help improve PSAU by reporting maintenance and facility issues quickly.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="report" class="section">
+
+<div class="content-card">
+
+<h2 style="margin-bottom:1.5rem;">
+Submit New Report
+</h2>
+
+<div class="form-group">
+<label>Issue Category</label>
+
+<select id="issueType">
+<option>Dirty Classroom</option>
+<option>
+    Slow Internet</option>
+<option>Broken Furniture</option>
+<option>Lighting Issues</option>
+<option>Water Problems</option>
+<option>Other</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input type="text" id="location">
+</div>
+
+<div class="form-group">
+<label>Details</label>
+<textarea rows="4" id="description"></textarea>
+</div>
+
+<button class="btn-primary" onclick="addReport()">
+Submit Report
+</button>
+
+</div>
+
+</div>
+
+<div id="my-reports" class="section">
+
+<div class="content-card">
+
+<h2>My Reports</h2>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Category</th>
+<th>Location</th>
+<th>Details</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="reportsList"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div id="dashboard" class="section">
+
+<div class="content-card">
+
+<h2>Dashboard</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<div class="stat-number" id="totalReports">0</div>
+<h3>Total Reports</h3>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="admin" class="section">
+
+<div class="content-card">
+
+<h2>Admin Panel</h2>
+
+<div class="form-group">
+<label>Admin Username</label>
+<input type="text" id="adminUser">
+</div>
+
+<div class="form-group">
+<label>Admin Password</label>
+<input type="password" id="adminPass">
+</div>
+
+<button class="btn-primary" onclick="adminLogin()">
+Login Admin
+</button>
+
+<div id="adminContent" style="display:none; margin-top:2rem;">
+
+<h3 style="margin-bottom:1rem;">All Reports</h3>
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Category</th>
+<th>Location</th>
+<th>Details</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="adminReportsList"></tbody>
+
+</table>
+
+<h3 style="margin-top:2rem;">Create Announcement</h3>
+
+<div class="form-group">
+<textarea rows="3" id="announcementText"></textarea>
+</div>
+
+<button class="btn-primary" onclick="postAnnouncement()">
+Post Announcement
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="announcement" class="section">
+
+<div class="content-card">
+
+<h2>Announcements</h2>
+
+<div class="announcement-box" id="announcementList">
+
+<p>No announcements yet.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="contact" class="section">
+
+<div class="content-card">
+
+<h2>Contact</h2>
+
+<p>Email: psau@gmail.com</p>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+let reports =
+JSON.parse(localStorage.getItem('psau_reports')) || [];
+
+let announcements =
+JSON.parse(localStorage.getItem('psau_announcements')) || [];
+
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "psau123";
+
+function showSection(sectionId,event){
+
+document.querySelectorAll('.section')
+.forEach(section=>{
+section.classList.remove('active');
+});
+
+document.getElementById(sectionId)
+.classList.add('active');
+
+document.querySelectorAll('.nav-links a')
+.forEach(link=>{
+link.classList.remove('active');
+});
+
+event.target.classList.add('active');
+
+}
+
+function addReport(){
+
+const type =
+document.getElementById('issueType').value;
+
+const location =
+document.getElementById('location').value;
+
+const description =
+document.getElementById('description').value;
+
+if(location === '' || description === ''){
+alert('Complete all fields.');
+return;
+}
+const report = {
+type,
+location,
+description,
+status:'Pending'
+};
+
+reports.push(report);
+
+localStorage.setItem(
+'psau_reports',
+JSON.stringify(reports)
+);
+
+updateReports();
+
+document.getElementById('location').value = '';
+document.getElementById('description').value = '';
+
+alert('Report submitted.');
+
+}
+
+function updateReports(){
+
+const reportsList =
+document.getElementById('reportsList');
+
+const adminReportsList =
+document.getElementById('adminReportsList');
+
+reportsList.innerHTML = '';
+adminReportsList.innerHTML = '';
+
+reports.forEach((report,index)=>{
+
+reportsList.innerHTML += `
+
+<tr>
+<td>${report.type}</td>
+<td>${report.location}</td>
+<td>${report.description}</td>
+<td>
+<span class="status-badge ${report.status === 'Done' ? 'done' : ''}">
+${report.status}
+</span>
+</td>
+</tr>
+
+`;
+
+adminReportsList.innerHTML += `
+
+<tr>
+<td>${report.type}</td>
+<td>${report.location}</td>
+<td>${report.description}</td>
+<td>
+
+<select onchange="changeStatus(${index},this.value)">
+
+<option value="Pending"
+${report.status === 'Pending' ? 'selected' : ''}>
+Pending
+</option>
+
+<option value="Done"
+${report.status === 'Done' ? 'selected' : ''}>
+Done
+</option>
+
+</select>
+
+</td>
+</tr>
+
+`;
+
+});
+
+document.getElementById('totalReports')
+.textContent = reports.length;
+
+}
+
+function changeStatus(index,status){
+
+reports[index].status = status;
+
+localStorage.setItem(
+'psau_reports',
+JSON.stringify(reports)
+);
+
+updateReports();
+
+}
+
+function adminLogin(){
+
+const username =
+document.getElementById('adminUser').value;
+
+const password =
+document.getElementById('adminPass').value;
+
+if(
+username === ADMIN_USERNAME &&
+password === ADMIN_PASSWORD
+){
+
+document.getElementById('adminContent')
+.style.display = 'block';
+
+alert('Admin login successful.');
+
+}else{
+
+alert('Wrong admin credentials.');
+
+}
+
+}
+
+function postAnnouncement(){
+
+const text =
+document.getElementById('announcementText').value;
+
+if(text === ''){
+alert('Enter announcement.');
+return;
+}
+
+announcements.unshift(text);
+
+localStorage.setItem(
+'psau_announcements',
+JSON.stringify(announcements)
+);
+
+loadAnnouncements();
+
+document.getElementById('announcementText').value = '';
+
+alert('Announcement posted.');
+
+}
+
+function loadAnnouncements(){
+
+const announcementList =
+document.getElementById('announcementList');
+
+announcementList.innerHTML = '';
+
+if(announcements.length === 0){
+
+announcementList.innerHTML =
+'<p>No announcements yet.</p>';
+
+return;
+
+}
+
+announcements.forEach(item=>{
+
+announcementList.innerHTML += `
+
+<div class="announcement-item">
+${item}
+</div>
+
+`;
+
+});
+
+}
+
+updateReports();
+loadAnnouncements();
+
+</script>
+
+</body>
+</html>
